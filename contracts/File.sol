@@ -24,6 +24,8 @@ contract File {
     mapping (uint256 => FileState) private changeLog;
     uint256 private countUpdates;
     
+    event OnChange(string eventId, string eventDescriptor);
+    
     function File(address registryAddress, string _fileName, string _fileHash) public {
         //"0xbfd5b36fa6f5de48d807397e9b68d0a0d694e38e", "file1", "docx", "hello world"
         actorRegistry = ActorRegistry(registryAddress);
@@ -91,8 +93,6 @@ contract File {
         }
     }
     
-    event OnChange(string eventId, string eventDescriptor);
-    
     function updateFile(string newFileName, string newFileHash) public returns (bool) {
         //require(actorRegistry.actorExists(msg.sender));
         
@@ -125,6 +125,10 @@ contract File {
     
     function howManyPendingRequests() public returns (uint256) {
         return countPendingRequests;
+    }
+    
+    function howManyUpdates() public returns (uint256) {
+        return countUpdates;
     }
     
     function getFileName() public returns (string) {

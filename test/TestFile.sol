@@ -12,7 +12,7 @@ contract TestFile {
     address actor2 = 0xf17f52151ebef6c7334fad080c5704d77216b732;
     address actor3 = 0xc5fdf4076b8f3a5357c5e395ab970b5b54098fef;
     
-    string fileName = "file1";
+    string fileName = "originalFile";
     string fileHash = "uedbgiwgirfiefi";
 
     File file;
@@ -66,5 +66,15 @@ contract TestFile {
         Assert.isTrue(file.isActorPendingApproval(actor3), "Actor3 is still pending approval");
         file.approveInvolvementRequest(actor3);
         Assert.isFalse(file.isActorPendingApproval(actor3), "Actor3 is now pending approval");
+    }
+    
+    // Testing updateFile() function
+    function testUpdateFile() public {
+        Assert.equal(file.howManyUpdates(), 1, "File was updated once");
+        //Assert.equal(keccak256(file.getFileName()), keccak256(fileName), "File still has the old name");
+        //fileName = "newFile";
+        file.updateFile("newFile", "frubgirebgi");
+        Assert.equal(file.howManyUpdates(), 2, "File was updated twice");
+        //Assert.equal(keccak256(file.getFileName()), keccak256(fileName), "File has now the new name");
     }
 }
